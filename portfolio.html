@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Egunjobi Ayoyinka Kaosarat | Virtual Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f2545;
+    --navy-mid: #1a3a6e;
+    --navy-light: #2b5399;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f8f6f1;
+    --white: #ffffff;
+    --text-muted: #7a8aaa;
+    --border: rgba(15,37,69,0.1);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248,246,241,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+    color: var(--navy); text-decoration: none; text-transform: uppercase;
+    opacity: 0.7; transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--navy);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute; right: -40px; top: 0; bottom: 0;
+    width: 80px;
+    background: var(--navy);
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 500; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-name em { color: var(--gold); font-style: normal; display: block; }
+  .hero-desc {
+    font-size: 15px; line-height: 1.75; font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    max-width: 400px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+    animation: fadeUp 0.6s 0.3s ease both;
+    cursor: pointer; border: none;
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .hero-right {
+    background: var(--cream);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 5rem 4rem;
+    position: relative;
+  }
+  .avatar-frame {
+    width: 260px; height: 320px;
+    border: 2px solid var(--navy);
+    position: relative;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .avatar-frame::before {
+    content: '';
+    position: absolute; top: 12px; left: 12px;
+    right: -12px; bottom: -12px;
+    border: 2px solid var(--gold);
+    z-index: -1;
+  }
+  .avatar-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a3a6e 0%, #0f2545 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+  }
+  .avatar-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -2px;
+  }
+  .avatar-tag {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .stats-row {
+    display: flex; gap: 2.5rem;
+    animation: fadeUp 0.6s 0.35s ease both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--navy);
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted); margin-top: 4px;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700; line-height: 1.15;
+    color: var(--navy); margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 15px; color: var(--text-muted); line-height: 1.7;
+    max-width: 520px; margin-bottom: 3rem;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--gold);
+    margin-bottom: 3rem;
+  }
+
+  /* SERVICES */
+  .services-bg { background: var(--white); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .service-card {
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--navy);
+    padding: 2rem 1.75rem;
+    background: var(--white);
+    transition: border-top-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-top-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .service-icon {
+    width: 44px; height: 44px;
+    background: var(--cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 1.25rem;
+  }
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 600; color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+  .service-desc {
+    font-size: 13.5px; line-height: 1.7; color: var(--text-muted);
+  }
+  .service-list {
+    margin-top: 1rem; list-style: none; padding: 0;
+  }
+  .service-list li {
+    font-size: 13px; color: var(--text-muted);
+    padding: 4px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-list li::before {
+    content: '';
+    display: inline-block; width: 5px; height: 5px;
+    background: var(--gold); border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* WHY ME */
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+  }
+  .why-items { display: flex; flex-direction: column; gap: 1.5rem; }
+  .why-item { display: flex; gap: 1.25rem; align-items: flex-start; }
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; font-weight: 700; color: rgba(15,37,69,0.08);
+    line-height: 1; min-width: 48px;
+  }
+  .why-body h4 {
+    font-size: 15px; font-weight: 500; color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .why-body p { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; }
+  .why-visual {
+    background: var(--navy);
+    padding: 3rem;
+    position: relative;
+  }
+  .why-visual::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 120px; color: var(--gold);
+    opacity: 0.15; position: absolute; top: 10px; left: 20px; line-height: 1;
+  }
+  .why-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-style: italic; line-height: 1.65;
+    color: var(--white); position: relative; z-index: 1;
+    margin-bottom: 1.5rem;
+  }
+  .why-author { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); }
+
+  /* REVIEWS */
+  .reviews-bg { background: var(--white); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .review-card {
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--gold);
+    padding: 1.75rem;
+    background: var(--white);
+  }
+  .review-quote {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+  }
+  .review-stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+  .review-meta {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .review-meta strong {
+    display: block;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* TOOLS */
+  .tools-bg { background: var(--navy); }
+  .tools-bg .section-title { color: var(--white); }
+  .tools-bg .section-sub { color: rgba(255,255,255,0.5); }
+  .tools-bg .section-tag { color: var(--gold-light); }
+  .tools-grid {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+  }
+  .tool-pill {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px; font-weight: 400;
+    padding: 8px 20px; border-radius: 100px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .tool-pill:hover {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); }
+  .form-input, .form-textarea {
+    border: 1px solid var(--border);
+    background: var(--white);
+    padding: 12px 16px; font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--navy); border-radius: 2px;
+    transition: border-color 0.2s; outline: none;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--navy-light); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .submit-btn {
+    background: var(--navy); color: var(--white);
+    border: none; padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+  .submit-btn:hover { background: var(--navy-light); }
+  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+  .contact-item h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 4px; }
+  .contact-item p { font-size: 15px; color: var(--navy); font-weight: 400; }
+  .contact-email {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.5;
+  }
+  .availability {
+    background: var(--navy);
+    padding: 1.5rem; border-radius: 2px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .avail-dot {
+    width: 10px; height: 10px; background: #4ade80;
+    border-radius: 50%; flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(74,222,128,0.2);
+    animation: pulse 2s infinite;
+  }
+  .avail-text { font-size: 13px; color: rgba(255,255,255,0.85); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px; letter-spacing: 0.5px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  footer strong { color: var(--gold); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(74,222,128,0.2); }
+    50% { box-shadow: 0 0 0 6px rgba(74,222,128,0.08); }
+  }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--navy); border-radius: 2px; transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none; position: fixed; top: 64px; left: 0; right: 0;
+    background: var(--cream); border-bottom: 1px solid var(--border);
+    z-index: 99; flex-direction: column; padding: 1rem 2rem;
+    box-shadow: 0 8px 24px rgba(15,37,69,0.08);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 15px; font-weight: 500; color: var(--navy);
+    text-decoration: none; padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  @media (max-width: 768px) {
+    nav .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 4rem 1.5rem 3rem; }
+    .hero-left::after { display: none; }
+    .hero-right { display: none; }
+    .hero-name { font-size: 2rem; }
+    section { padding: 3rem 1.25rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-visual { display: none; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .tools-grid { gap: 8px; }
+    .tool-pill { font-size: 12px; padding: 6px 14px; }
+    .submit-btn { width: 100%; }
+    footer { font-size: 11px; padding: 1.25rem; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: 1.75rem; }
+    .hero-left { padding: 3rem 1.25rem 2.5rem; }
+    .hero-desc { font-size: 14px; }
+    nav { padding: 0 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">A<span>.</span>Kaosarat</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">About</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#resume">Resume</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#why" onclick="closeMenu()">About</a>
+  <a href="#reviews" onclick="closeMenu()">Reviews</a>
+  <a href="#tools" onclick="closeMenu()">Tools</a>
+  <a href="#resume" onclick="closeMenu()">Resume</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+<script>
+  function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+  }
+  function closeMenu() {
+    document.getElementById("mobileMenu").classList.remove("open");
+  }
+</script>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Virtual Assistant</p>
+    <h1 class="hero-name">
+      Egunjobi
+      <em>Ayoyinka Kaosarat</em>
+    </h1>
+    <p class="hero-desc">
+      I help busy entrepreneurs and businesses reclaim their time — handling admin, communications, social media, and operations with precision and professionalism.
+    </p>
+    <button class="hero-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      Work With Me →
+    </button>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-frame">
+      <div class="avatar-inner">
+        <span class="avatar-initials">AK</span>
+        <span class="avatar-tag">Virtual Assistant</span>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Clients Served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-bg" id="services">
+  <div class="section-inner">
+    <p class="section-tag">What I Do</p>
+    <h2 class="section-title">Services Tailored to Your Needs</h2>
+    <div class="divider"></div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3 class="service-title">Admin Support</h3>
+        <p class="service-desc">Keeping your business running smoothly behind the scenes.</p>
+        <ul class="service-list">
+          <li>Calendar &amp; schedule management</li>
+          <li>Email inbox organisation</li>
+          <li>Document preparation</li>
+          <li>Travel arrangements</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3 class="service-title">Social Media</h3>
+        <p class="service-desc">Building and maintaining your brand presence online.</p>
+        <ul class="service-list">
+          <li>Content creation &amp; scheduling</li>
+          <li>Community engagement</li>
+          <li>Analytics &amp; reporting</li>
+          <li>Caption &amp; hashtag strategy</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎧</div>
+        <h3 class="service-title">Customer Service</h3>
+        <p class="service-desc">Delivering prompt, professional responses to your clients.</p>
+        <ul class="service-list">
+          <li>Email &amp; chat support</li>
+          <li>Query resolution</li>
+          <li>Order &amp; complaint handling</li>
+          <li>CRM updates</li>
+        </ul>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🗂️</div>
+        <h3 class="service-title">Data &amp; Research</h3>
+        <p class="service-desc">Accurate data entry and insightful research when you need it.</p>
+        <ul class="service-list">
+          <li>Data entry &amp; cleaning</li>
+          <li>Market research</li>
+          <li>Spreadsheet management</li>
+          <li>Report preparation</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section id="why">
+  <div class="section-inner">
+    <div class="why-grid">
+      <div>
+        <p class="section-tag">Why Choose Me</p>
+        <h2 class="section-title">Reliable. Discreet. Results-Driven.</h2>
+        <div class="divider"></div>
+        <div class="why-items">
+          <div class="why-item">
+            <div class="why-num">01</div>
+            <div class="why-body">
+              <h4>Clear Communication</h4>
+              <p>You'll always know where things stand. I give regular updates and flag issues before they become problems.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">02</div>
+            <div class="why-body">
+              <h4>Deadline-Focused</h4>
+              <p>I treat your deadlines as non-negotiable. If I commit to something, it gets done — on time, every time.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">03</div>
+            <div class="why-body">
+              <h4>Highly Adaptable</h4>
+              <p>From startups to established businesses, I adjust my working style to fit your industry and workflow.</p>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-num">04</div>
+            <div class="why-body">
+              <h4>Confidentiality Assured</h4>
+              <p>Your business information is handled with full discretion. NDAs available upon request.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-visual">
+        <p class="why-quote">
+          "The right virtual assistant doesn't just save you time — they give you back the energy to focus on what matters most."
+        </p>
+        <p class="why-author">— Ayoyinka Kaosarat</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-bg" id="reviews">
+  <div class="section-inner">
+    <p class="section-tag">Client Reviews</p>
+    <h2 class="section-title">Trusted by Clients &amp; Customers</h2>
+    <p class="section-sub">Real feedback from administrative support, virtual assistance, and customer service work.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">*****</div>
+        <p class="review-quote">"I had an issue with my order and reached out expecting the usual runaround. Instead, Ayoyinka responded within minutes, was incredibly calm and professional, and resolved my complaint completely in one interaction. No back and forth, no frustration. She followed up the next day to make sure I was satisfied."</p>
+        <p class="review-meta"><strong>Customer</strong>Online Retail Store, Nigeria</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">*****</div>
+        <p class="review-quote">"Ayoyinka supported our team with meticulous data entry and documentation during a period where accuracy was non-negotiable. She handled confidential product and compliance records with complete discretion, organised our reports clearly, and consistently met every tight turnaround we gave her. Her attention to detail made our internal processes noticeably smoother."</p>
+        <p class="review-meta"><strong>Operations Lead</strong>Pharmaceutical Company, Nigeria</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">*****</div>
+        <p class="review-quote">"I was sceptical about hiring a virtual assistant at first but Ayoyinka completely changed my mind. She took over my inbox, scheduled all my client calls, and prepared weekly summaries of everything happening in the business. I finally had time to focus on growing the business instead of being buried in admin."</p>
+        <p class="review-meta"><strong>Small Business Owner</strong>Lagos, Nigeria</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="tools-bg" id="tools">
+  <div class="section-inner">
+    <p class="section-tag">My Toolkit</p>
+    <h2 class="section-title">Tools &amp; Platforms I Work With</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.5); margin-bottom: 2rem;">Proficient in the tools that modern businesses depend on.</p>
+    <div class="tools-grid">
+      <span class="tool-pill">Google Workspace</span>
+      <span class="tool-pill">Microsoft Office</span>
+      <span class="tool-pill">Trello</span>
+      <span class="tool-pill">Asana</span>
+      <span class="tool-pill">Slack</span>
+      <span class="tool-pill">Zoom</span>
+      <span class="tool-pill">Canva</span>
+      <span class="tool-pill">Hootsuite</span>
+      <span class="tool-pill">Buffer</span>
+      <span class="tool-pill">Notion</span>
+      <span class="tool-pill">HubSpot CRM</span>
+      <span class="tool-pill">Mailchimp</span>
+      <span class="tool-pill">Calendly</span>
+      <span class="tool-pill">Dropbox</span>
+      <span class="tool-pill">ChatGPT / AI Tools</span>
+      <span class="tool-pill">WhatsApp Business</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-tag">Let's Connect</p>
+    <h2 class="section-title">Ready to Work Together?</h2>
+    <div class="divider"></div>
+    <div class="contact-grid">
+      <form class="contact-form" action="mailto:egunjobikao@gmail.com?subject=Portfolio%20inquiry" method="post" enctype="text/plain">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" type="text" id="from_name" name="Name" placeholder="Jane Smith" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="from_email" name="Email" placeholder="jane@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">How Can I Help?</label>
+          <textarea class="form-textarea" id="message" name="Message" placeholder="Tell me a little about what you need..." required></textarea>
+        </div>
+        <button class="submit-btn" type="submit" id="submitBtn">Send Message</button>
+        <p id="form-status" style="font-size:13px; margin-top:8px;"></p>
+      </form>
+      <div class="contact-info">
+        <div class="availability">
+          <div class="avail-dot"></div>
+          <span class="avail-text">Currently available for new clients — remote &amp; flexible hours</span>
+        </div>
+        <div class="contact-item">
+          <h4>Email</h4>
+          <p><a id="emailDisplay" class="contact-email" href="#" style="color: var(--navy); text-decoration: none;"></a></p>
+<script>
+  var u = "egunjobikao";
+  var d = "gmail.com";
+  var el = document.getElementById("emailDisplay");
+  el.textContent = u + "@" + d;
+  el.href = "mailto:" + u + "@" + d;
+
+</script>
+        </div>
+        <div class="contact-item">
+          <h4>Location</h4>
+          <p>Lagos, Nigeria — Available Worldwide</p>
+        </div>
+        <div class="contact-item">
+          <h4>Working Hours</h4>
+          <p>Monday – Friday, 8am – 6pm WAT</p>
+        </div>
+        <div class="contact-item">
+          <h4>Response Time</h4>
+          <p>Within 24 hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- RESUME -->
+<section id="resume" style="background: var(--white);">
+  <div class="section-inner">
+    <p class="section-tag">My Background</p>
+    <h2 class="section-title">Resume</h2>
+    <div class="divider"></div>
+
+    <!-- About -->
+    <div style="margin-bottom: 3rem; max-width: 780px;">
+      <p style="font-size: 15px; line-height: 1.8; color: var(--text-muted);">
+        Highly detail-oriented and dedicated Administrative Virtual Assistant with a strong background in executive support and customer service, adept at optimizing operations for small businesses. Expertly manages complex scheduling, coordinates intricate travel logistics, and handles sensitive information with utmost professionalism.
+      </p>
+    </div>
+
+    <!-- Experience -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-family: Playfair Display, serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 1.5rem; display: inline-block;">Work Experience</h3>
+
+      <div style="margin-bottom: 2rem; padding-left: 1rem; border-left: 3px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 4px; margin-bottom: 6px;">
+          <h4 style="font-size: 15px; font-weight: 500; color: var(--navy);">Administrative Assistant (Freelance)</h4>
+          <span style="font-size: 12px; color: var(--gold); font-weight: 500; background: rgba(201,168,76,0.1); padding: 3px 10px; border-radius: 20px;">Aug 2024 – Dec 2024</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Assisting Private Business Owner · Remote</p>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px;">
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Managed and optimized complex calendars, scheduling critical meetings and tracking deadlines.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Orchestrated comprehensive email correspondence, enhancing communication efficiency.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Coordinated travel logistics and virtual meetings across diverse time zones.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Conducted in-depth research and prepared analytical reports to inform business decisions.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Managed sensitive and confidential information with professionalism and discretion.</li>
+        </ul>
+      </div>
+
+      <div style="padding-left: 1rem; border-left: 3px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 4px; margin-bottom: 6px;">
+          <h4 style="font-size: 15px; font-weight: 500; color: var(--navy);">Customer Support Representative</h4>
+          <span style="font-size: 12px; color: var(--gold); font-weight: 500; background: rgba(201,168,76,0.1); padding: 3px 10px; border-radius: 20px;">Mar 2024 – Jun 2024</span>
+        </div>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Assisting Private Business Owner · Remote</p>
+        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px;">
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Resolved high-volume customer complaints via troubleshooting and escalation.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Achieved and maintained a 90% customer satisfaction rate consistently.</li>
+          <li style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; padding-left: 14px; position: relative;"><span style="position:absolute; left:0; color: var(--gold);">·</span>Documented customer interactions and tracked resolutions to improve support processes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div style="margin-bottom: 3rem;">
+      <h3 style="font-family: Playfair Display, serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 1.5rem; display: inline-block;">Education</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
+        <div style="padding: 1.25rem; border: 1px solid var(--border); border-top: 3px solid var(--navy);">
+          <p style="font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 4px;">Virtual Assistant Certification</p>
+          <p style="font-size: 13px; color: var(--gold); margin-bottom: 4px;">ALX Africa</p>
+          <p style="font-size: 12px; color: var(--text-muted);">Sep 2024 – Nov 2024 · Remote</p>
+        </div>
+        <div style="padding: 1.25rem; border: 1px solid var(--border); border-top: 3px solid var(--navy);">
+          <p style="font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 4px;">B.Sc. Chemistry Education</p>
+          <p style="font-size: 13px; color: var(--gold); margin-bottom: 4px;">Lagos State University</p>
+          <p style="font-size: 12px; color: var(--text-muted);">Sep 2016 – Sep 2021 · Lagos, Nigeria</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div>
+      <h3 style="font-family: Playfair Display, serif; font-size: 1.2rem; font-weight: 600; color: var(--navy); border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 1.5rem; display: inline-block;">Skills</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+        <div>
+          <p style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); font-weight: 500; margin-bottom: 10px;">Admin & Operations</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Calendar Management</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Email Management</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Travel Coordination</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Report Preparation</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Virtual Office Admin</span>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); font-weight: 500; margin-bottom: 10px;">Customer Support</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">CRM Software</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Complaint Handling</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Multichannel Support</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Troubleshooting</span>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); font-weight: 500; margin-bottom: 10px;">Communication</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Professional Writing</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Active Listening</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Stakeholder Engagement</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Emotional Intelligence</span>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); font-weight: 500; margin-bottom: 10px;">Problem Solving</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Critical Thinking</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Research & Analysis</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Process Improvement</span>
+            <span style="font-size: 12px; padding: 4px 12px; background: var(--cream); color: var(--navy); border-radius: 20px;">Active Listening</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 <strong>Egunjobi Ayoyinka Kaosarat</strong> · Virtual Assistant Portfolio</p>
+</footer>
+
+</body>
+</html>
